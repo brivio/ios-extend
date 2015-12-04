@@ -1,0 +1,7 @@
+#!/bin/sh
+content='//不要手动修改\n#ifndef MyExtend_h\n#define MyExtend_h\n\n';
+for i in $(find . -name "*.h"|sort); do
+    content=$content'#import "'$(basename $i)'"\n';
+done
+content=$content'\n#endif';
+echo $content>./Extend.h
