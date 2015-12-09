@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name             = "brivio-ios-extend"
+  s.name             = "ios-extend"
   s.version          = "0.1.0"
   s.summary          = "some usefull objective-c categories for ios development"
 
