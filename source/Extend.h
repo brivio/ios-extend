@@ -16,6 +16,7 @@
 #import "UICollectionView+Extend.h"
 #import "UIColor+Extend.h"
 #import "UIDatePicker+Extend.h"
+#import "UIImage+Extend.h"
 #import "UIImageView+Extend.h"
 #import "UILabel+Extend.h"
 #import "UIScrollView+Extend.h"

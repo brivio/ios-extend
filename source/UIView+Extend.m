@@ -46,6 +46,14 @@
     [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:target action:action]];
 }
 
+- (BOOL)isTap:(UITapGestureRecognizer *)gestureRecognizer {
+    CGPoint point = [gestureRecognizer locationInView:self];
+    return CGRectGetMinX(self.frame) <= point.x
+            && point.x <= CGRectGetMaxX(self.frame)
+            && CGRectGetMinY(self.frame) <= point.y
+            && point.y <= CGRectGetMaxY(self.frame);
+}
+
 - (void)empty {
     for (NSUInteger i = 0; i < self.subviews.count; i++) {
         [((UIView *) self.subviews[i]) removeFromSuperview];
@@ -90,5 +98,45 @@
     } while (nextResponder != nil);
 
     return nil;
+}
+
+- (void)setFrameY:(CGFloat)y {
+    CGRect frame = self.frame;
+    frame.origin.y = y;
+    self.frame = frame;
+}
+
+- (void)setFrameX:(CGFloat)x {
+    CGRect frame = self.frame;
+    frame.origin.x = x;
+    self.frame = frame;
+}
+
+- (void)setFrameWidth:(CGFloat)width {
+    CGRect frame = self.frame;
+    frame.size.width = width;
+    self.frame = frame;
+}
+
+- (void)setFrameHeight:(CGFloat)height {
+    CGRect frame = self.frame;
+    frame.size.height = height;
+    self.frame = frame;
+}
+
+- (CGFloat)frameX {
+    return self.frame.origin.x;
+}
+
+- (CGFloat)frameY {
+    return self.frame.origin.y;
+}
+
+- (CGFloat)frameWidth {
+    return self.frame.size.width;
+}
+
+- (CGFloat)frameHeight {
+    return self.frame.size.height;
 }
 @end
