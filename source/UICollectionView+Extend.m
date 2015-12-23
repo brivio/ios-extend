@@ -11,6 +11,14 @@
     [self registerNib:[UINib nibWithNibName:[cls description] bundle:nil] forCellWithReuseIdentifier:[cls description]];
 }
 
+- (void)registerHeaderNib:(Class)cls {
+    [self registerNib:[UINib nibWithNibName:[cls description] bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:[cls description]];
+}
+
+- (void)registerFooterNib:(Class)cls {
+    [self registerNib:[UINib nibWithNibName:[cls description] bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:[cls description]];
+}
+
 - (void)registerNibs:(NSArray *)array {
     for (NSUInteger i = 0; i < array.count; i++) {
         [self registerNib:array[i]];

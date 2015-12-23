@@ -5,6 +5,8 @@
 
 - (void)registerNib:(Class)cls;
 
+- (void)registerHeaderNib:(Class)cls;
+
 - (void)registerNibs:(NSArray *)array;
 
 - (void)highlight:(NSIndexPath *)indexPath color:(UIColor *)color;
