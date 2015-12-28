@@ -16,4 +16,12 @@
     self.contentOffset = CGPointMake(0, 0);
 }
 
+- (void)fitContent {
+    CGRect contentRect = CGRectZero;
+    for (UIView *view in self.subviews) {
+        contentRect = CGRectUnion(contentRect, view.frame);
+    }
+    self.contentSize = contentRect.size;
+}
+
 @end

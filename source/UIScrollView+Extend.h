@@ -6,4 +6,6 @@
 - (void)setContentWidth:(CGFloat)width;
 
 - (void)goTop;
+
+- (void)fitContent;
 @end
