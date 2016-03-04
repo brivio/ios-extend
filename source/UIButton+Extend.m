@@ -19,7 +19,8 @@
 }
 
 - (void)setBackgroundImage:(NSString *)name {
-    [self setBackgroundImage:[UIImage imageNamed:name] forState:UIControlStateNormal];
+    self.layer.contents = (id) [UIImage imageNamed:name].CGImage;
+    self.layer.contentsGravity = kCAGravityResizeAspect;
 }
 
 @end

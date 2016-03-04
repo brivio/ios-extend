@@ -13,6 +13,9 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.source_files = 'source/*'
-  s.dependency 'MBProgressHUD'
-  s.dependency 'SDWebImage'
+  s.frameworks='WebKit'
+  s.dependency 'MBProgressHUD', '~> 0.9.2'
+  s.dependency 'SDWebImage', '~> 3.7.3'
+  s.dependency 'UITextView+Placeholder', '~> 1.1.0'
+  s.dependency 'Masonry', '~> 0.6.4'
 end

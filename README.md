@@ -1,9 +1,5 @@
 # brivio-cocoa-extend
 
-[![Version](https://img.shields.io/cocoapods/v/brivio-cocoa-extend.svg?style=flat)](http://cocoapods.org/pods/brivio-cocoa-extend)
-[![License](https://img.shields.io/cocoapods/l/brivio-cocoa-extend.svg?style=flat)](http://cocoapods.org/pods/brivio-cocoa-extend)
-[![Platform](https://img.shields.io/cocoapods/p/brivio-cocoa-extend.svg?style=flat)](http://cocoapods.org/pods/brivio-cocoa-extend)
-
 ## Usage
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
@@ -13,7 +9,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 ## Installation
 
 ```ruby
-pod "brivio-cocoa-extend"
+pod "ios-extend",:git => "https://github.com/brivio/ios-extend.git"
 ```
 
 ## Author

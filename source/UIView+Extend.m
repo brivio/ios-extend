@@ -1,6 +1,66 @@
 #import "MBProgressHUD.h"
+#import "UITextView+Placeholder.h"
+#import "common.h"
+#import "View+MASAdditions.h"
+#import "UIView+Extend.h"
+
+PROPERTY(UIView, UIView*, simpleLoadingView);
+
+PROPERTY(UIView, MBProgressHUD*, hud);
 
 @implementation UIView (Extend)
+- (void)resizeToFitSubviews {
+    float w = 0;
+    float h = 0;
+
+    for (UIView *v in [self subviews]) {
+        float fw = v.frame.origin.x + v.frame.size.width;
+        float fh = v.frame.origin.y + v.frame.size.height;
+        w = MAX(fw, w);
+        h = MAX(fh, h);
+    }
+    [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, w, h)];
+}
+
+- (CGFloat)getSubviewsHeight {
+    NSLayoutConstraint *tempConstraint = [NSLayoutConstraint
+            constraintWithItem:self
+                     attribute:NSLayoutAttributeWidth
+                     relatedBy:NSLayoutRelationEqual
+                        toItem:nil
+                     attribute:NSLayoutAttributeNotAnAttribute
+                    multiplier:1
+                      constant:[self getWidth]];
+    [self.superview addConstraint:tempConstraint];
+    CGSize size = [self systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    [self.superview removeConstraint:tempConstraint];
+    return size.height;
+//    return contentRect.size.height;
+}
+
+- (void)showLoading {
+    if (self.simpleLoadingView != nil) {
+        [self.simpleLoadingView removeFromSuperview];
+    }
+    [self setsimpleLoadingView:[[UIView alloc] initWithFrame:self.bounds]];
+    [self addSubview:self.simpleLoadingView];
+    self.simpleLoadingView.backgroundColor = [UIColor whiteColor];
+
+    UIActivityIndicatorView *loading = [UIActivityIndicatorView new];
+    loading.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    [loading startAnimating];
+    [self.simpleLoadingView addSubview:loading];
+    [loading mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self.simpleLoadingView);
+    }];
+}
+
+- (void)hideLoading {
+    if (self.simpleLoadingView != nil) {
+        [self.simpleLoadingView removeFromSuperview];
+    }
+}
+
 - (void)setBorderWidth:(CGFloat)width {
     self.layer.borderWidth = width;
 }
@@ -43,15 +103,21 @@
 
 - (void)click:(id)target action:(SEL)action {
     self.userInteractionEnabled = YES;
-    [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:target action:action]];
+    if ([self isKindOfClass:[UIButton class]]) {
+        [((UIButton *) self) addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:target action:action]];
+    }
 }
 
 - (BOOL)isTap:(UITapGestureRecognizer *)gestureRecognizer {
     CGPoint point = [gestureRecognizer locationInView:self];
-    return CGRectGetMinX(self.frame) <= point.x
-            && point.x <= CGRectGetMaxX(self.frame)
-            && CGRectGetMinY(self.frame) <= point.y
-            && point.y <= CGRectGetMaxY(self.frame);
+    CGPoint framePoint = CGPointMake(point.x + CGRectGetMinX(self.frame), point.y + CGRectGetMinY(self.frame));
+
+    return CGRectGetMinX(self.frame) <= framePoint.x
+            && framePoint.x <= CGRectGetMaxX(self.frame)
+            && CGRectGetMinY(self.frame) <= framePoint.y
+            && framePoint.y <= CGRectGetMaxY(self.frame);
 }
 
 - (void)empty {
@@ -72,18 +138,38 @@
     self.layer.mask = maskLayer;
 }
 
-- (void)showHUD:(NSString *)title {
-    [self showHUD:title callback:nil];
+- (void)showQuickHUD:(NSString *)title {
+    [self showQuickHUD:title callback:nil];
 }
 
-- (void)showHUD:(NSString *)title callback:(MBProgressHUDCompletionBlock)callback {
+- (void)showQuickHUD:(NSString *)title callback:(MBProgressHUDCompletionBlock)callback {
     MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self];
     hud.labelText = title;
     hud.mode = MBProgressHUDModeCustomView;
     [self addSubview:hud];
     [hud show:YES];
-    [hud hide:YES afterDelay:1];
+    [hud hide:YES afterDelay:1.5];
     hud.completionBlock = callback;
+}
+
+- (void)showProgressHUD:(NSString *)title {
+    [self showProgressHUD:title callback:nil];
+}
+
+- (void)showProgressHUD:(NSString *)title callback:(MBProgressHUDCompletionBlock)callback {
+    [self hideProgressHUD];
+    [self sethud:[[MBProgressHUD alloc] initWithView:self]];
+    self.hud.labelText = title;
+    self.hud.mode = MBProgressHUDModeIndeterminate;
+    [self addSubview:self.hud];
+    [self.hud show:YES];
+    self.hud.completionBlock = callback;
+}
+
+- (void)hideProgressHUD {
+    if (self.hud != nil) {
+        [self.hud hide:YES];
+    }
 }
 
 - (UIViewController *)viewController {
@@ -138,5 +224,25 @@
 
 - (CGFloat)frameHeight {
     return self.frame.size.height;
+}
+
+- (void)disableEdit {
+    [self _disableEdit:self];
+}
+
+- (void)_disableEdit:(UIView *)view {
+    [view.subviews enumerateObjectsUsingBlock:^(UIView *v, NSUInteger idx, BOOL *stop) {
+        if ([v isKindOfClass:[UITextField class]]) {
+            UITextField *tf = (UITextField *) v;
+            tf.enabled = NO;
+            tf.placeholder = @"";
+        } else if ([v isKindOfClass:[UITextView class]]) {
+            UITextView *tv = (UITextView *) v;
+            tv.editable = NO;
+            tv.placeholder = @"";
+        } else {
+            [self _disableEdit:v];
+        }
+    }];
 }
 @end

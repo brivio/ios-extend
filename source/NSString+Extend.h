@@ -26,5 +26,11 @@
 
 - (BOOL)isUrl;
 
+- (BOOL)isEmail;
+
 - (NSString *)host;
+
+- (NSString *)defaults:(NSString *)def;
+
+- (NSArray *)explode:(NSString *)separator;
 @end

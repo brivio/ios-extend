@@ -10,4 +10,6 @@
 - (void)loadHTML:(NSString *)html;
 
 - (void)injectJavascript:(NSString *)resource;
+
+- (void)stop;
 @end

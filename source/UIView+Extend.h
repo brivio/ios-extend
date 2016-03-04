@@ -3,6 +3,14 @@
 
 @interface UIView (Extend)
 
+- (void)resizeToFitSubviews;
+
+- (CGFloat)getSubviewsHeight;
+
+- (void)showLoading;
+
+- (void)hideLoading;
+
 - (CGFloat)getWidth;
 
 - (CGFloat)getHeight;
@@ -29,9 +37,15 @@
 
 - (void)setCorner:(UIRectCorner)corners size:(CGFloat)size;
 
-- (void)showHUD:(NSString *)title;
+- (void)showQuickHUD:(NSString *)title;
 
-- (void)showHUD:(NSString *)title callback:(MBProgressHUDCompletionBlock)callback;
+- (void)showQuickHUD:(NSString *)title callback:(MBProgressHUDCompletionBlock)callback;
+
+- (void)showProgressHUD:(NSString *)title;
+
+- (void)showProgressHUD:(NSString *)title callback:(MBProgressHUDCompletionBlock)callback;
+
+- (void)hideProgressHUD;
 
 - (UIViewController *)viewController;
 
@@ -50,4 +64,7 @@
 - (void)setFrameWidth:(CGFloat)width;
 
 - (void)setFrameHeight:(CGFloat)height;
+
+- (void)disableEdit;
+
 @end

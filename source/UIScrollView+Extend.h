@@ -7,5 +7,9 @@
 
 - (void)goTop;
 
+- (void)goBottom;
+
 - (void)fitContent;
+
+- (void)fitContent:(CGFloat)offset;
 @end

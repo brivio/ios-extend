@@ -1,5 +1,5 @@
 #import "UIScrollView+Extend.h"
-
+#import "UIView+Extend.h"
 
 @implementation UIScrollView (Extend)
 - (void)setContentHeight:(CGFloat)height {
@@ -16,12 +16,23 @@
     self.contentOffset = CGPointMake(0, 0);
 }
 
+- (void)goBottom {
+    CGPoint bottomOffset = CGPointMake(0, self.contentSize.height);
+    [self setContentOffset:bottomOffset animated:YES];
+}
+
 - (void)fitContent {
+    [self fitContent:0];
+}
+
+- (void)fitContent:(CGFloat)offset {
     CGRect contentRect = CGRectZero;
     for (UIView *view in self.subviews) {
         contentRect = CGRectUnion(contentRect, view.frame);
     }
-    self.contentSize = contentRect.size;
+    CGSize size = contentRect.size;
+    size.height += offset;
+    self.contentSize = size;
 }
 
 @end

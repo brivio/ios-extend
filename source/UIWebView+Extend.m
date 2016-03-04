@@ -1,12 +1,10 @@
-#import <objc/runtime.h>
 #import "UIView+Extend.h"
 #import "UIWebView+Extend.h"
+#import "common.h"
 
-static const void *lastOffsetKey = "lastOffsetKey";
-//static const void *bridgetKey = "bridge";
+PROPERTY_STRING(UIWebView, lastOffset)
 
 @implementation UIWebView (Extend)
-@dynamic lastOffset;
 
 - (void)setNOScroll {
     self.scrollView.scrollEnabled = NO;
@@ -20,6 +18,7 @@ body{padding:0px;margin:0px;}\
 img{max-width:%.0fpx;}\
             </style>", self.frame.size.width];
     html = [NSString stringWithFormat:@"%@%@", style, html];
+//    [[NSMutableURLRequest alloc] initWithURL:<#(NSURL *)URL#> cachePolicy:<#(NSURLRequestCachePolicy)cachePolicy#> timeoutInterval:<#(NSTimeInterval)timeoutInterval#>];
     [self loadHTMLString:html baseURL:nil];
 }
 
@@ -40,12 +39,10 @@ img{max-width:%.0fpx;}\
     [self stringByEvaluatingJavaScriptFromString:js];
 }
 
-- (NSString *)lastOffset {
-    return (NSString *) objc_getAssociatedObject(self, lastOffsetKey);
+- (void)stop {
+    if (self.loading) {
+        [self stopLoading];
+    }
+    self.delegate = nil;
 }
-
-- (void)setLastOffset:(NSString *)lastOffset {
-    objc_setAssociatedObject(self, lastOffsetKey, lastOffset, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
 @end

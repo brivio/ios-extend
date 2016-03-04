@@ -2,7 +2,7 @@
 
 @interface UILabel (Extend)
 
-- (void)fontSize:(CGFloat)fontSize;
+- (void)textSize:(CGFloat)fontSize;
 
 - (void)makeRoundWithTitle:(NSString *)title borderColor:(int)borderColor widthConstraint:(NSLayoutConstraint *)widthConstraint;
 

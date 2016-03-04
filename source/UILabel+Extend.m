@@ -2,7 +2,7 @@
 #import "UIColor+Extend.h"
 
 @implementation UILabel (Extend)
-- (void)fontSize:(CGFloat)fontSize {
+- (void)textSize:(CGFloat)fontSize {
     self.font = [UIFont systemFontOfSize:fontSize];
 }
 

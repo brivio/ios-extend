@@ -14,4 +14,8 @@
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
 }
 
++ (void)openUrlForTel:(NSString *)tel {
+    [UIApplication openUrl:[NSString stringWithFormat:@"tel://%@", tel]];
+}
+
 @end

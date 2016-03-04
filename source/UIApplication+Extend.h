@@ -4,4 +4,6 @@
 + (void)openSettings;
 
 + (void)openUrl:(NSString *)url;
+
++ (void)openUrlForTel:(NSString *)tel;
 @end

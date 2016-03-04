@@ -1,3 +1,5 @@
+#import "NSString+Extend.h"
+
 @implementation NSString (Extend)
 - (instancetype)trim {
     return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -109,6 +111,15 @@
     return NO;
 }
 
+- (BOOL)isEmail {
+    BOOL stricterFilter = NO; // Discussion http://blog.logichigh.com/2010/09/02/validating-an-e-mail-address/
+    NSString *stricterFilterString = @"^[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}$";
+    NSString *laxString = @"^.+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*$";
+    NSString *emailRegex = laxString;
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+    return [emailTest evaluateWithObject:[self trim]];
+}
+
 - (NSString *)host {
     if (![self isUrl])return nil;
     return [NSURL URLWithString:self].host;
@@ -122,4 +133,15 @@
 
 }
 
+- (NSString *)defaults:(NSString *)def {
+    if ([self trim].length == 0) {
+        return def;
+    } else {
+        return self;
+    }
+}
+
+- (NSArray *)explode:(NSString *)separator {
+    return [self componentsSeparatedByString:separator];
+}
 @end
