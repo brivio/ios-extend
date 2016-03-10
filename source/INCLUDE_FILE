@@ -2,6 +2,7 @@
 #ifndef MyExtend_h
 #define MyExtend_h
 
+#import "Extend.h"
 #import "NSArray+Extend.h"
 #import "NSBundle+Extend.h"
 #import "NSData+Extend.h"

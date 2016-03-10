@@ -1,7 +1,11 @@
 #!/bin/sh
+INCLUDE_FILE='./Extend.h'
+if [[ -f $INCLUDE_FILE ]]; then
+    rm $INCLUDE_FILE
+fi
 content='//不要手动修改\n#ifndef MyExtend_h\n#define MyExtend_h\n\n';
 for i in $(find . -name "*.h"|sort); do
     content=$content'#import "'$(basename $i)'"\n';
 done
 content=$content'\n#endif';
-echo $content>./Extend.h
+echo $content>$INCLUDE_FILE

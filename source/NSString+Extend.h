@@ -33,4 +33,12 @@
 - (NSString *)defaults:(NSString *)def;
 
 - (NSArray *)explode:(NSString *)separator;
+
+- (NSString *)md5;
+
+- (NSString *)sha1;
+
+- (NSString *)base64_encode;
+
+- (NSString *)base64_decode;
 @end

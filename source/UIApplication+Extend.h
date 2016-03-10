@@ -6,4 +6,6 @@
 + (void)openUrl:(NSString *)url;
 
 + (void)openUrlForTel:(NSString *)tel;
+
++ (NSString *)UUID;
 @end

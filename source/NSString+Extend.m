@@ -1,3 +1,4 @@
+#import <CommonCrypto/CommonDigest.h>
 #import "NSString+Extend.h"
 
 @implementation NSString (Extend)
@@ -143,5 +144,35 @@
 
 - (NSArray *)explode:(NSString *)separator {
     return [self componentsSeparatedByString:separator];
+}
+
+- (NSString *)md5 {
+    const char *cStr = [self UTF8String];
+    unsigned char digest[CC_MD5_DIGEST_LENGTH];
+    CC_MD5(cStr, strlen(cStr), digest);
+    NSMutableString *result = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
+    for (int i = 0; i < CC_MD5_DIGEST_LENGTH; i++)
+        [result appendFormat:@"%02x", digest[i]];
+    return result;
+}
+
+- (NSString *)sha1 {
+    const char *cstr = [self cStringUsingEncoding:NSUTF8StringEncoding];
+    NSData *data = [NSData dataWithBytes:cstr length:self.length];
+    uint8_t digest[CC_SHA1_DIGEST_LENGTH];
+    CC_SHA1(data.bytes, data.length, digest);
+    NSMutableString *result = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
+    for (int i = 0; i < CC_SHA1_DIGEST_LENGTH; i++) {
+        [result appendFormat:@"%02x", digest[i]];
+    }
+    return result;
+}
+
+- (NSString *)base64_encode {
+    return [[self dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0];
+}
+
+- (NSString *)base64_decode {
+    return [[NSString alloc] initWithData:[[NSData alloc] initWithBase64EncodedString:self options:0] encoding:NSUTF8StringEncoding];
 }
 @end

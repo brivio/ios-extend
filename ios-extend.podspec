@@ -18,4 +18,5 @@ Pod::Spec.new do |s|
   s.dependency 'SDWebImage', '~> 3.7.3'
   s.dependency 'UITextView+Placeholder', '~> 1.1.0'
   s.dependency 'Masonry', '~> 0.6.4'
+  s.dependency 'SSKeychain', '~> 1.3.1'
 end
