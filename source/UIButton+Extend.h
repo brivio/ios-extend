@@ -7,7 +7,10 @@
 
 - (void)setTitleColor:(UIColor *)color;
 
+- (void)setTitleSize:(CGFloat)size;
+
 - (void)setImage:(NSString *)name;
 
 - (void)setBackgroundImage:(NSString *)name;
+
 @end

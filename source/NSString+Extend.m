@@ -1,5 +1,6 @@
 #import <CommonCrypto/CommonDigest.h>
 #import "NSString+Extend.h"
+#import "NSDate+Extend.h"
 
 @implementation NSString (Extend)
 - (instancetype)trim {
@@ -53,9 +54,6 @@
         date = [dateFormatter dateFromString:self];
     } @catch (NSException *e) {
 
-    }
-    if (date == nil) {
-        date = [NSDate new];
     }
     return date;
 }
@@ -131,7 +129,10 @@
         return YES;
     }
     return ![[self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length];
+}
 
+- (BOOL)isNotEmpty {
+    return [self trim].length > 0;
 }
 
 - (NSString *)defaults:(NSString *)def {
@@ -174,5 +175,14 @@
 
 - (NSString *)base64_decode {
     return [[NSString alloc] initWithData:[[NSData alloc] initWithBase64EncodedString:self options:0] encoding:NSUTF8StringEncoding];
+}
+
+- (NSDictionary *)toDict {
+    return [NSJSONSerialization JSONObjectWithData:[self dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+}
+
+- (NSString *)wrapSpace:(NSUInteger)num {
+    NSString *pad = [[NSString string] stringByPaddingToLength:num withString:@" " startingAtIndex:0];
+    return [NSString stringWithFormat:@"%@%@%@", pad, self, pad];
 }
 @end

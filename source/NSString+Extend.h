@@ -21,6 +21,8 @@
 
 - (BOOL)isEmpty;
 
+- (BOOL)isNotEmpty;
+
 //格式验证
 - (BOOL)isMobile;
 
@@ -41,4 +43,8 @@
 - (NSString *)base64_encode;
 
 - (NSString *)base64_decode;
+
+- (NSDictionary *)toDict;
+
+- (NSString *)wrapSpace:(NSUInteger)num;
 @end

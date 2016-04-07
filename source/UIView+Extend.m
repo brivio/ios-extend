@@ -35,7 +35,6 @@ PROPERTY(UIView, MBProgressHUD*, hud);
     CGSize size = [self systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
     [self.superview removeConstraint:tempConstraint];
     return size.height;
-//    return contentRect.size.height;
 }
 
 - (void)showLoading {
@@ -152,6 +151,10 @@ PROPERTY(UIView, MBProgressHUD*, hud);
     hud.completionBlock = callback;
 }
 
+- (void)showProgressHUD {
+    [self showProgressHUD:nil];
+}
+
 - (void)showProgressHUD:(NSString *)title {
     [self showProgressHUD:title callback:nil];
 }
@@ -174,13 +177,11 @@ PROPERTY(UIView, MBProgressHUD*, hud);
 
 - (UIViewController *)viewController {
     UIResponder *nextResponder = self;
-
+    id result;
     do {
         nextResponder = [nextResponder nextResponder];
-
         if ([nextResponder isKindOfClass:[UIViewController class]])
             return (UIViewController *) nextResponder;
-
     } while (nextResponder != nil);
 
     return nil;
@@ -226,10 +227,6 @@ PROPERTY(UIView, MBProgressHUD*, hud);
     return self.frame.size.height;
 }
 
-- (void)disableEdit {
-    [self _disableEdit:self];
-}
-
 - (void)_disableEdit:(UIView *)view {
     [view.subviews enumerateObjectsUsingBlock:^(UIView *v, NSUInteger idx, BOOL *stop) {
         if ([v isKindOfClass:[UITextField class]]) {
@@ -245,4 +242,32 @@ PROPERTY(UIView, MBProgressHUD*, hud);
         }
     }];
 }
+
+- (void)disableEdit {
+    [self _disableEdit:self];
+}
+
+- (void)setTopBorder:(UIColor *)color {
+    [self setTopBorder:color height:1];
+}
+
+- (void)setTopBorder:(UIColor *)color height:(CGFloat)height {
+    UIView *line = [UIView new];
+    [self addSubview:line];
+    [line mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(self);
+        make.height.mas_equalTo(height);
+        make.top.equalTo(self.mas_top);
+    }];
+    line.backgroundColor = color;
+}
+
+- (void)toFront {
+    [self.superview bringSubviewToFront:self];
+}
+
+- (void)toBack {
+    [self.superview sendSubviewToBack:self];
+}
+
 @end

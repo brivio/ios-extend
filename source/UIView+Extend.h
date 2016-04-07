@@ -1,6 +1,8 @@
 #import <Foundation/Foundation.h>
 #import <MBProgressHUD/MBProgressHUD.h>
 
+#define UIViewFromNib(class) [[NSBundle mainBundle] loadNibNamed:[class className] owner:nil options:nil][0]
+
 @interface UIView (Extend)
 
 - (void)resizeToFitSubviews;
@@ -18,6 +20,10 @@
 - (CGFloat)getX;
 
 - (CGFloat)getY;
+
+- (void)setTopBorder:(UIColor *)color;
+
+- (void)setTopBorder:(UIColor *)color height:(CGFloat)height;
 
 - (void)setBorderWidth:(CGFloat)width;
 
@@ -40,6 +46,8 @@
 - (void)showQuickHUD:(NSString *)title;
 
 - (void)showQuickHUD:(NSString *)title callback:(MBProgressHUDCompletionBlock)callback;
+
+- (void)showProgressHUD;
 
 - (void)showProgressHUD:(NSString *)title;
 
@@ -67,4 +75,7 @@
 
 - (void)disableEdit;
 
+- (void)toFront;
+
+- (void)toBack;
 @end

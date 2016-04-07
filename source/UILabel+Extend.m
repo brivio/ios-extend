@@ -6,6 +6,10 @@
     self.font = [UIFont systemFontOfSize:fontSize];
 }
 
+- (void)textColor:(int)rgbValue {
+    self.textColor = [UIColor rgb:rgbValue];
+}
+
 - (void)makeRoundWithTitle:(NSString *)title borderColor:(int)borderColor widthConstraint:(NSLayoutConstraint *)widthConstraint {
     [self setBorderWidth:1];
     if (borderColor > 0) {
@@ -25,4 +29,7 @@
     [self makeRoundWithTitle:title borderColor:0xffffff widthConstraint:widthConstraint];
 }
 
+- (CGFloat)width {
+    return [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, self.font.pointSize)].width;
+}
 @end

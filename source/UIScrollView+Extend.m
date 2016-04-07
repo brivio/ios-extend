@@ -17,7 +17,7 @@
 }
 
 - (void)goBottom {
-    CGPoint bottomOffset = CGPointMake(0, self.contentSize.height);
+    CGPoint bottomOffset = CGPointMake(0, self.contentSize.height - self.bounds.size.height);
     [self setContentOffset:bottomOffset animated:YES];
 }
 

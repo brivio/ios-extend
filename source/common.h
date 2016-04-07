@@ -16,3 +16,10 @@
     @end
 
 typedef void (^SimpleCallback)();
+
+#define DISPATCH_AFTER(sec, method) @weakify(self); \
+    dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t) (sec * NSEC_PER_SEC)); \
+    dispatch_after(delayTime, dispatch_get_main_queue(), ^{ \
+    @strongify(self); \
+        method; \
+    });
